@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CE0D9DE5281C03B100BE39C5 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9DE4281C03B100BE39C5 /* DetailController.swift */; };
 		CE0D9DE7281C042400BE39C5 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9DE6281C042300BE39C5 /* DetailView.swift */; };
+		CE16E8ED282031B100599291 /* FavoritePhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16E8EC282031B100599291 /* FavoritePhotos.swift */; };
+		CE16E8EF2820347100599291 /* DateFormatter + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */; };
 		CE7FC2A6281FD1DA00B7C431 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2A5281FD1DA00B7C431 /* RequestManager.swift */; };
 		CE7FC2A8281FD2DB00B7C431 /* DataTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2A7281FD2DB00B7C431 /* DataTaskManager.swift */; };
 		CE7FC2AC281FD73B00B7C431 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2AB281FD73B00B7C431 /* User.swift */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		CE0D9DE4281C03B100BE39C5 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		CE0D9DE6281C042300BE39C5 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		CE16E8EC282031B100599291 /* FavoritePhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePhotos.swift; sourceTree = "<group>"; };
+		CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + Extensions.swift"; sourceTree = "<group>"; };
 		CE7FC2A5281FD1DA00B7C431 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		CE7FC2A7281FD2DB00B7C431 /* DataTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskManager.swift; sourceTree = "<group>"; };
 		CE7FC2AB281FD73B00B7C431 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 				CE96BB18281BAD2400BC3F5E /* Assets.xcassets */,
 				CE96BB1A281BAD2400BC3F5E /* LaunchScreen.storyboard */,
 				CE96BB1D281BAD2400BC3F5E /* Info.plist */,
+				CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */,
 			);
 			path = "Unsplash-Test";
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				CE7FC2AB281FD73B00B7C431 /* User.swift */,
+				CE16E8EC282031B100599291 /* FavoritePhotos.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -248,7 +254,9 @@
 				CE96BB10281BAD1E00BC3F5E /* AppDelegate.swift in Sources */,
 				CE96BB28281BB24200BC3F5E /* LikedPhotoController.swift in Sources */,
 				CE0D9DE7281C042400BE39C5 /* DetailView.swift in Sources */,
+				CE16E8ED282031B100599291 /* FavoritePhotos.swift in Sources */,
 				CE96BB31281BC29D00BC3F5E /* PhotosCell.swift in Sources */,
+				CE16E8EF2820347100599291 /* DateFormatter + Extensions.swift in Sources */,
 				CEE8B896281E851600F62AC8 /* NetworkManager.swift in Sources */,
 				CE7FC2AC281FD73B00B7C431 /* User.swift in Sources */,
 				CE96BB24281BAD8300BC3F5E /* MainTabBarController.swift in Sources */,

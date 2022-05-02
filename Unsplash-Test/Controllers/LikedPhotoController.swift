@@ -6,26 +6,44 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LikedPhotoController: UITableViewController {
 	
+	let realm = try! Realm()
+	var photos: Results<FavoritePhotos>!
+	
 	private let cellId = "cellId"
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		tableView.register(LikedPhotosCell.self, forCellReuseIdentifier: cellId)
+		loadPhotos()
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		loadPhotos()
+	}
+	
+	fileprivate func loadPhotos() {
+		photos = realm.objects(FavoritePhotos.self)
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
+	}
+	
 	
 	// MARK: - Table view data source
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		return 3
+		return 1
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return 1
+		return photos.count
 	}
 	
 	
@@ -33,7 +51,8 @@ class LikedPhotoController: UITableViewController {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? LikedPhotosCell else {
 			return UITableViewCell()
 		}
-		
+		let photo = photos[indexPath.row]
+		cell.favPhoto = photo
 		return cell
 	}
 	
@@ -41,10 +60,10 @@ class LikedPhotoController: UITableViewController {
 //		return 100
 //	}
 	
-//	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//		let vc = DetailController()
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let favPhoto = photos[indexPath.row]
 //		navigationController?.pushViewController(vc, animated: true)
-//	}
+	}
 	
 	/*
 	 // Override to support conditional editing of the table view.

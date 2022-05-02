@@ -8,17 +8,23 @@
 import Foundation
 import UIKit
 
+protocol DetailViewControllerDelegate: AnyObject {
+	func savePhoto(photo: FavoritePhotos)
+	func deletePhoto(photo: FavoritePhotos)
+}
+
 class DetailView: UIView {
 	
-	var photo: PhotoData? {
+	var photo: PhotoData! {
 		didSet {
-			guard let photo = photo else {
-				return
-			}
-				
-			imageView.sd_setImage(with: URL(string: photo.urls.full))
+//			guard let photo = photo else { return }
+			let df = DateFormatter()
+			imageView.sd_setImage(with: URL(string: photo.urls.regular))
+			authorAndDateLabel.text = "By: \(photo.user.username)\nDate: \(df.format().string(from: photo.createdAt))"
 		}
 	}
+	
+	weak var delegate: DetailViewControllerDelegate?
 	
 	private let imageView: UIImageView = {
 		let iv = UIImageView()
@@ -27,11 +33,12 @@ class DetailView: UIView {
 		return iv
 	}()
 	
-	private let addToFavoriteButton: UIButton = {
+	let addToFavoriteButton: UIButton = {
 		let button = UIButton()
 		var config = UIImage.SymbolConfiguration.init(pointSize: 30, weight: .semibold)
 		button.setImage(UIImage(systemName: "heart")?.withConfiguration(config), for: .normal)
 		button.tintColor = UIColor(red: 255 / 255, green: 3 / 255, blue: 114 / 255, alpha: 1)
+		button.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
 		return button
 	}()
 	
@@ -39,7 +46,7 @@ class DetailView: UIView {
 		let label = UILabel()
 		label.text = "By: Tinkoff\nDate: 24.09.1999"
 		label.font = .systemFont(ofSize: 16)
-		label.numberOfLines = 2
+		label.numberOfLines = 3
 		return label
 	}()
 	
@@ -52,12 +59,20 @@ class DetailView: UIView {
 		return label
 	}()
 	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-//		backgroundColor = .white
-		backgroundColor = .systemBackground
-		setupLayout()
-	}
+//	init(photo: PhotoData) {
+//		self.photo = photo
+//		super.init(frame: .zero)
+//
+//		backgroundColor = .systemBackground
+//		setupLayout()
+//	}
+	
+		override init(frame: CGRect) {
+			super.init(frame: frame)
+			//		backgroundColor = .white
+			backgroundColor = .systemBackground
+			setupLayout()
+		}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -82,8 +97,21 @@ class DetailView: UIView {
 		addToFavoriteButton.frame = CGRect(x: imageView.frame.width - 44, y: imageView.frame.maxY - buttonSize / 2, width: buttonSize, height: buttonSize)
 		addToFavoriteButton.layer.cornerRadius = buttonSize / 2
 		
-		stackView.frame = CGRect(x: 16, y: addToFavoriteButton.frame.maxY + 20, width: screenSize.size.width - 32, height: 60)
-//		placeAndCountViewsLabel.frame = CGRect(x: screenSize.maxX - 16, y: addToFavoriteButton.frame.maxY + 20, width: 150, height: 60)
+		stackView.frame = CGRect(x: 16, y: addToFavoriteButton.frame.maxY + 20, width: screenSize.size.width - 32, height: 90)
 	}
 	
+	
+	@objc func handleLike() {
+		photo.isFavoritePhoto.toggle()
+		print("Pressed")
+		let config = UIImage.SymbolConfiguration.init(pointSize: 30, weight: .semibold)
+		if photo.isFavoritePhoto == true {
+		  addToFavoriteButton.setImage(UIImage(systemName: "heart.fill")?.withConfiguration(config), for: .normal)
+			
+			delegate?.savePhoto(photo: self.photo.toFavoritePhotoModel())
+		} else {
+			addToFavoriteButton.setImage(UIImage(systemName: "heart")?.withConfiguration(config), for: .normal)
+			delegate?.deletePhoto(photo: self.photo.toFavoritePhotoModel())
+		}
+	}
 }

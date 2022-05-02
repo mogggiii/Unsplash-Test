@@ -19,6 +19,7 @@ struct PhotoData: Decodable {
 	let urls: Urls
 	let likes: Int
 	let likedByUser: Bool
+	var isFavoritePhoto = false
 	let user: User
 	
 	enum CodingKeys: String, CodingKey {
@@ -27,6 +28,16 @@ struct PhotoData: Decodable {
 		case width, height, urls, likes
 		case likedByUser = "liked_by_user"
 		case user
+	}
+	
+	func toFavoritePhotoModel() -> FavoritePhotos {
+		let favPhoto = FavoritePhotos()
+		let df = DateFormatter()
+		favPhoto.userName = self.user.username
+		favPhoto.isFavourite = self.isFavoritePhoto
+		favPhoto.createdAT = df.format().string(from: self.createdAt)
+		favPhoto.photoUrl = self.urls.regular
+		return favPhoto
 	}
 }
 
@@ -43,3 +54,5 @@ struct Urls: Decodable {
 struct User: Decodable {
 	let username: String
 }
+
+

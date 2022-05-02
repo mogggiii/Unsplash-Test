@@ -8,9 +8,16 @@
 import UIKit
 
 class LikedPhotosCell: UITableViewCell {
+
+	var favPhoto: FavoritePhotos! {
+		didSet {
+			photo.sd_setImage(with: URL(string: favPhoto.photoUrl))
+			authorNameLabel.text = favPhoto.userName
+		}
+	}
 	
 	let photoSize: CGFloat = 55
-	
+
 	let photo: UIImageView = {
 		let iv = UIImageView()
 		iv.contentMode = .scaleAspectFill

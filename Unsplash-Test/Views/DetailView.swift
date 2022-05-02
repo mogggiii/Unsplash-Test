@@ -10,6 +10,16 @@ import UIKit
 
 class DetailView: UIView {
 	
+	var photo: PhotoData? {
+		didSet {
+			guard let photo = photo else {
+				return
+			}
+				
+			imageView.sd_setImage(with: URL(string: photo.urls.full))
+		}
+	}
+	
 	private let imageView: UIImageView = {
 		let iv = UIImageView()
 		iv.backgroundColor = .black
@@ -44,7 +54,8 @@ class DetailView: UIView {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		backgroundColor = .white
+//		backgroundColor = .white
+		backgroundColor = .systemBackground
 		setupLayout()
 	}
 	

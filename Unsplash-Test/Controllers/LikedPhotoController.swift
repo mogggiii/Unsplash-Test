@@ -37,14 +37,14 @@ class LikedPhotoController: UITableViewController {
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 90
-	}
+//	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//		return 100
+//	}
 	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let vc = DetailController()
-		navigationController?.pushViewController(vc, animated: true)
-	}
+//	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//		let vc = DetailController()
+//		navigationController?.pushViewController(vc, animated: true)
+//	}
 	
 	/*
 	 // Override to support conditional editing of the table view.

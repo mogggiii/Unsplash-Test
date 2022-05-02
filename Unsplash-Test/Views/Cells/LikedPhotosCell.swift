@@ -16,9 +16,7 @@ class LikedPhotosCell: UITableViewCell {
 		iv.contentMode = .scaleAspectFill
 		iv.clipsToBounds = true
 		iv.translatesAutoresizingMaskIntoConstraints = false
-		iv.image = UIImage(systemName: "person.fill")
-		iv.backgroundColor = .gray
-		iv.layer.borderColor = UIColor.white.cgColor
+		iv.layer.borderColor = UIColor.systemBlue.cgColor
 		iv.layer.borderWidth = 2
 		return iv
 	}()
@@ -49,12 +47,11 @@ class LikedPhotosCell: UITableViewCell {
 		photo.layer.cornerRadius = photoSize / 2
 		
 		NSLayoutConstraint.activate([
+			photo.widthAnchor.constraint(equalToConstant: photoSize),
+			photo.heightAnchor.constraint(equalToConstant: photoSize),
 			photo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
 			photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 			photo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-			photo.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-			photo.widthAnchor.constraint(equalToConstant: photoSize),
-			photo.heightAnchor.constraint(equalToConstant: photoSize),
 			
 			authorNameLabel.centerYAnchor.constraint(equalTo: photo.centerYAnchor),
 			authorNameLabel.leadingAnchor.constraint(equalTo: photo.trailingAnchor, constant: 20),

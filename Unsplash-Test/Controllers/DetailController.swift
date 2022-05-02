@@ -8,24 +8,34 @@
 import UIKit
 
 class DetailController: UIViewController {
-
-	let detailView = DetailView()
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-			
-			view.addSubview(detailView)
-			detailView.frame = view.bounds
-    }
+	var photo: PhotoData?
 	
-    /*
-    // MARK: - Navigation
+	override func loadView() {
+		super.loadView()
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+		self.view = DetailView()
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		view().photo = photo
+	}
+	
+	
+	func view() -> DetailView {
+		return self.view as! DetailView
+	}
+	
+	/*
+	 // MARK: - Navigation
+	 
+	 // In a storyboard-based application, you will often want to do a little preparation before navigation
+	 override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+	 // Get the new view controller using segue.destination.
+	 // Pass the selected object to the new view controller.
+	 }
+	 */
+	
 }

@@ -12,6 +12,13 @@ class PhotosCollectionController: UIViewController {
 	private let cellId = "cellId"
 	private let margin: CGFloat = 10.0
 	private let searchConroller = UISearchController(searchResultsController: nil)
+	private var images = [PhotoData]()
+	
+	private let activityIndicator: UIActivityIndicatorView = {
+		let indicator = UIActivityIndicatorView()
+		indicator.style = .medium
+		return indicator
+	}()
 	
 	private lazy var layout: WaterFallFlowLayout = {
 		let layout = WaterFallFlowLayout()
@@ -25,6 +32,7 @@ class PhotosCollectionController: UIViewController {
 	private lazy var collectionView: UICollectionView = {
 		let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
 		collectionView.dataSource = self
+		collectionView.delegate = self
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,17 +45,43 @@ class PhotosCollectionController: UIViewController {
 		
 		view.addSubview(collectionView)
 		
+		getRandomPhotos()
 		searchBarConfigure()
+		loading()
 	}
 	
-	private func searchBarConfigure() {
+	fileprivate func searchBarConfigure() {
 		searchConroller.searchBar.placeholder = "Search photo"
 		searchConroller.obscuresBackgroundDuringPresentation = false
 		searchConroller.searchBar.delegate = self
 		navigationItem.hidesSearchBarWhenScrolling = false
 		self.navigationItem.searchController = searchConroller
 	}
+	
+	fileprivate func getRandomPhotos() {
+		NetworkManager.shared.fetchRandomPhotos(count: 50) { [weak self] result in
+			switch result {
+			case .success(let photos):
+				self?.images = photos
+				DispatchQueue.main.async {
+					self?.collectionView.reloadData()
+				}
+			case.failure(let error):
+				print("FFFFF", error.localizedDescription)
+			}
+			
+			self?.activityIndicator.stopAnimating()
+		}
+	}
 
+	fileprivate func loading() {
+		view.addSubview(activityIndicator)
+		view.bringSubviewToFront(activityIndicator)
+		activityIndicator.frame = view.bounds
+		activityIndicator.startAnimating()
+		activityIndicator.hidesWhenStopped = true
+	}
+	
 }
 
 extension PhotosCollectionController: UISearchBarDelegate {
@@ -59,25 +93,38 @@ extension PhotosCollectionController: UISearchBarDelegate {
 	}
 }
 
-extension PhotosCollectionController: UICollectionViewDataSource {
+extension PhotosCollectionController: UICollectionViewDataSource, UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 10
+		return images.count
+		
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell1 = UICollectionViewCell()
-		cell1.backgroundColor = .gray
 		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? PhotosCell else {
-			return cell1
+			return UICollectionViewCell()
 		}
 		
+		let photo = images[indexPath.item]
+		cell.photo = photo
 		return cell
+	}
+
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let photo = images[indexPath.item]
+		let detailVC = DetailController()
+		detailVC.photo = photo
+		navigationController?.pushViewController(detailVC, animated: true)
 	}
 }
 
 extension PhotosCollectionController: WaterFallFlowLayoutDelegate {
 	func waterFallFlowLayout(_ waterFallFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-		return 150
+		let image = images[indexPath.item]
+		
+		let imageWidth = waterFallFlowLayout.itemWidth
+		let imageHeight = CGFloat(image.height) * imageWidth / CGFloat(image.width)
+		
+		return imageHeight
 	}
 	
 	func columnOfWaterFallFlow(in collectionView: UICollectionView) -> Int {

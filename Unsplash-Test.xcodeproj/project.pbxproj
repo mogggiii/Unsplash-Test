@@ -81,6 +81,14 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		CE8F60462821040500198E78 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CE96BB03281BAD1E00BC3F5E = {
 			isa = PBXGroup;
 			children = (
@@ -100,16 +108,14 @@
 		CE96BB0E281BAD1E00BC3F5E /* Unsplash-Test */ = {
 			isa = PBXGroup;
 			children = (
+				CE8F60462821040500198E78 /* Extensions */,
 				CE7FC2A4281FD1C400B7C431 /* Networking */,
 				CEE8B897281E98D800F62AC8 /* API */,
 				CE9D8CC6281D1FCF00EF52BB /* Models */,
 				CE96BB2B281BBAA100BC3F5E /* Views */,
 				CE96BB25281BB0C700BC3F5E /* Controllers */,
 				CE96BB26281BB0E000BC3F5E /* App */,
-				CE96BB18281BAD2400BC3F5E /* Assets.xcassets */,
-				CE96BB1A281BAD2400BC3F5E /* LaunchScreen.storyboard */,
 				CE96BB1D281BAD2400BC3F5E /* Info.plist */,
-				CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */,
 			);
 			path = "Unsplash-Test";
 			sourceTree = "<group>";
@@ -138,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				CE96BB2E281BC26F00BC3F5E /* Cells */,
+				CE96BB18281BAD2400BC3F5E /* Assets.xcassets */,
+				CE96BB1A281BAD2400BC3F5E /* LaunchScreen.storyboard */,
 				CE96BB2C281BBAB600BC3F5E /* WaterfallLayout.swift */,
 				CE0D9DE6281C042300BE39C5 /* DetailView.swift */,
 			);

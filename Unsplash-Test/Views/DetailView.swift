@@ -15,12 +15,20 @@ protocol DetailViewControllerDelegate: AnyObject {
 
 class DetailView: UIView {
 	
-	var photo: PhotoData! {
+	var photo: PhotoData? {
 		didSet {
-//			guard let photo = photo else { return }
+			guard let photo = photo else { return }
 			let df = DateFormatter()
 			imageView.sd_setImage(with: URL(string: photo.urls.regular))
 			authorAndDateLabel.text = "By: \(photo.user.username)\nDate: \(df.format().string(from: photo.createdAt))"
+		}
+	}
+	
+	var favPhoto: FavoritePhotos? {
+		didSet {
+			guard let favPhoto = favPhoto else { return }
+			imageView.sd_setImage(with: URL(string: favPhoto.photoUrl))
+			addToFavoriteButton.isHidden = true
 		}
 	}
 	
@@ -59,27 +67,17 @@ class DetailView: UIView {
 		return label
 	}()
 	
-//	init(photo: PhotoData) {
-//		self.photo = photo
-//		super.init(frame: .zero)
-//
-//		backgroundColor = .systemBackground
-//		setupLayout()
-//	}
-	
-		override init(frame: CGRect) {
-			super.init(frame: frame)
-			//		backgroundColor = .white
-			backgroundColor = .systemBackground
-			setupLayout()
-		}
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		backgroundColor = .systemBackground
+		setupLayout()
+	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
 	fileprivate func setupLayout() {
-		
 		let stackView = UIStackView(arrangedSubviews: [authorAndDateLabel, placeAndDownloadCountLabel])
 		stackView.distribution = .fill
 		stackView.axis = .horizontal
@@ -100,18 +98,16 @@ class DetailView: UIView {
 		stackView.frame = CGRect(x: 16, y: addToFavoriteButton.frame.maxY + 20, width: screenSize.size.width - 32, height: 90)
 	}
 	
-	
 	@objc func handleLike() {
-		photo.isFavoritePhoto.toggle()
-		print("Pressed")
 		let config = UIImage.SymbolConfiguration.init(pointSize: 30, weight: .semibold)
-		if photo.isFavoritePhoto == true {
-		  addToFavoriteButton.setImage(UIImage(systemName: "heart.fill")?.withConfiguration(config), for: .normal)
-			
-			delegate?.savePhoto(photo: self.photo.toFavoritePhotoModel())
+		photo?.isFavoritePhoto.toggle()
+		print("Pressed")
+		if photo?.isFavoritePhoto == true {
+			addToFavoriteButton.setImage(UIImage(systemName: "heart.fill")?.withConfiguration(config), for: .normal)
+			delegate?.savePhoto(photo: (self.photo?.toFavoritePhotoModel())!)
 		} else {
 			addToFavoriteButton.setImage(UIImage(systemName: "heart")?.withConfiguration(config), for: .normal)
-			delegate?.deletePhoto(photo: self.photo.toFavoritePhotoModel())
+			delegate?.deletePhoto(photo: (self.photo?.toFavoritePhotoModel())!)
 		}
 	}
 }

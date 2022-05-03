@@ -12,9 +12,10 @@ class DetailController: UIViewController {
 	
 	let realm = try! Realm()
 	
+	var photo: PhotoData?
+	var favPhoto: FavoritePhotos?
+	
 	private var likedPhotos: Results<FavoritePhotos>!
-	private var photo: PhotoData
-//	private var favPhoto: FavoritePhotos
 	
 	override func loadView() {
 		super.loadView()
@@ -22,19 +23,12 @@ class DetailController: UIViewController {
 		return self.view = DetailView()
 	}
 	
-	init(photo: PhotoData) {
-		self.photo = photo
-		super.init(nibName: nil, bundle: nil)
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
+	// MARK: - VC Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view().delegate = self
 		view().photo = photo
+		view().favPhoto = favPhoto
 	}
 	
 	fileprivate func view() -> DetailView {

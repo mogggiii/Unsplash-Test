@@ -73,7 +73,7 @@ class PhotosCollectionController: UIViewController {
 			self?.activityIndicator.stopAnimating()
 		}
 	}
-
+	
 	fileprivate func loading() {
 		view.addSubview(activityIndicator)
 		view.bringSubviewToFront(activityIndicator)
@@ -86,8 +86,20 @@ class PhotosCollectionController: UIViewController {
 
 extension PhotosCollectionController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		guard let text = searchBar.text else { return }
+		guard let text = searchBar.text, !text.isEmpty else { return }
 		
+		NetworkManager.shared.searchPhotos(count: 30, searchTerm: text) { result in
+			switch result {
+			case .success(let requestResult):
+				guard let photos = requestResult?.results else { return }
+				self.images = photos
+				DispatchQueue.main.async {
+					self.collectionView.reloadData()
+				}
+			case .failure(let error):
+				print(error)
+			}
+		}
 		searchBar.resignFirstResponder()
 		print(text)
 	}
@@ -108,10 +120,11 @@ extension PhotosCollectionController: UICollectionViewDataSource, UICollectionVi
 		cell.photo = photo
 		return cell
 	}
-
+	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let photo = images[indexPath.item]
-		let detailVC = DetailController(photo: photo)
+		let detailVC = DetailController()
+		detailVC.photo = photo
 		navigationController?.pushViewController(detailVC, animated: true)
 	}
 }

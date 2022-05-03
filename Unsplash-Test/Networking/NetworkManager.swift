@@ -19,10 +19,10 @@ final class NetworkManager {
 		DataTaskManager.shared.dataTask(request: request, completion: completion)
 	}
 	
-//	func searchPhotos(count: Int, searchTerm: String, completion: @escaping (Result<RequestResults?, Error>) -> ()) {
-//		guard let url = APIUrls.searchPhotos(query: searchTerm, count: count).url else { return }
-//		let request = RequestManager.shared.getRequest(url: url, httpMethod: .get)
-//		DataTaskManager.shared.dataTask(request: request, completion: completion)
-//	}
+	func searchPhotos(count: Int, searchTerm: String, completion: @escaping (Result<RequestResults?, Error>) -> ()) {
+		guard let url = APIUrls.searchPhotos(query: searchTerm, count: count).url else { return }
+		let request = RequestManager.shared.getRequest(url: url, httpMethod: .get)
+		DataTaskManager.shared.dataTask(request: request, completion: completion)
+	}
 		
 }

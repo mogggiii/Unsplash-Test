@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  SearchPhotoModel.swift
 //  Unsplash-Test
 //
 //  Created by mogggiii on 02.05.2022.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct RequestResults: Decodable {
+struct SearchPhotoModel: Decodable {
 	let total: Int
-	let results: [PhotoData]
+	let results: [Photo]
 }
 
-struct PhotoData: Decodable {
+struct Photo: Decodable {
 	let id: String
 	let createdAt: Date
 	let width, height: Int
@@ -30,6 +30,7 @@ struct PhotoData: Decodable {
 		case user
 	}
 	
+	/// Leads to FavoritePhotos
 	func toFavoritePhotoModel() -> FavoritePhotos {
 		let favPhoto = FavoritePhotos()
 		let df = DateFormatter()
@@ -37,6 +38,8 @@ struct PhotoData: Decodable {
 		favPhoto.isFavourite = self.isFavoritePhoto
 		favPhoto.createdAT = df.format().string(from: self.createdAt)
 		favPhoto.photoUrl = self.urls.regular
+		favPhoto.location = self.user.location
+		favPhoto.likesCount = self.likes
 		return favPhoto
 	}
 }
@@ -53,6 +56,7 @@ struct Urls: Decodable {
 
 struct User: Decodable {
 	let username: String
+	let location: String?
 }
 
 

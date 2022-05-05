@@ -9,11 +9,13 @@ import UIKit
 
 class PhotosCollectionController: UIViewController {
 	
+	// MARK: - 
 	private let cellId = "cellId"
 	private let margin: CGFloat = 10.0
 	private let searchConroller = UISearchController(searchResultsController: nil)
-	private var images = [PhotoData]()
+	private var images = [Photo]()
 	
+	// MARK: - UI Components
 	private let activityIndicator: UIActivityIndicatorView = {
 		let indicator = UIActivityIndicatorView()
 		indicator.style = .medium
@@ -40,6 +42,7 @@ class PhotosCollectionController: UIViewController {
 		return collectionView
 	}()
 	
+	// MARK: - VC Life cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -47,7 +50,7 @@ class PhotosCollectionController: UIViewController {
 		
 		getRandomPhotos()
 		searchBarConfigure()
-		loading()
+		showActivityIndicator()
 	}
 	
 	fileprivate func searchBarConfigure() {
@@ -61,20 +64,21 @@ class PhotosCollectionController: UIViewController {
 	fileprivate func getRandomPhotos() {
 		NetworkManager.shared.fetchRandomPhotos(count: 50) { [weak self] result in
 			switch result {
-			case .success(let photos):
-				self?.images = photos
+			case .success(let images):
 				DispatchQueue.main.async {
+					self?.images = images
 					self?.collectionView.reloadData()
 				}
 			case.failure(let error):
-				print("FFFFF", error.localizedDescription)
+				print("No random photos", error.localizedDescription)
+				self?.showErrotAlert()
 			}
 			
 			self?.activityIndicator.stopAnimating()
 		}
 	}
 	
-	fileprivate func loading() {
+	fileprivate func showActivityIndicator() {
 		view.addSubview(activityIndicator)
 		view.bringSubviewToFront(activityIndicator)
 		activityIndicator.frame = view.bounds
@@ -82,33 +86,46 @@ class PhotosCollectionController: UIViewController {
 		activityIndicator.hidesWhenStopped = true
 	}
 	
+	fileprivate func showErrotAlert() {
+		let alert = UIAlertController(title: "Ooops", message: "Something went wrong", preferredStyle: .alert)
+		let action = UIAlertAction(title: "OK", style: .destructive)
+		
+		alert.addAction(action)
+		present(alert, animated: true)
+	}
+	
 }
 
+// MARK: - Search Bar Delegate
 extension PhotosCollectionController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text, !text.isEmpty else { return }
+		searchBar.resignFirstResponder()
 		
 		NetworkManager.shared.searchPhotos(count: 30, searchTerm: text) { result in
 			switch result {
 			case .success(let requestResult):
 				guard let photos = requestResult?.results else { return }
-				self.images = photos
 				DispatchQueue.main.async {
+					self.images = photos
 					self.collectionView.reloadData()
 				}
 			case .failure(let error):
-				print(error)
+				print("SEARCH TERM ERROR", error)
+				DispatchQueue.main.async {
+					self.showErrotAlert()
+				}
 			}
 		}
-		searchBar.resignFirstResponder()
-		print(text)
 	}
 }
 
+// MARK: - Collection View Data Source, Collection View Delegate
+
 extension PhotosCollectionController: UICollectionViewDataSource, UICollectionViewDelegate {
+	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return images.count
-		
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -129,10 +146,11 @@ extension PhotosCollectionController: UICollectionViewDataSource, UICollectionVi
 	}
 }
 
+// MARK: - WaterFallFlowLayoutDelegate
+
 extension PhotosCollectionController: WaterFallFlowLayoutDelegate {
 	func waterFallFlowLayout(_ waterFallFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
 		let image = images[indexPath.item]
-		
 		let imageWidth = waterFallFlowLayout.itemWidth
 		let imageHeight = CGFloat(image.height) * imageWidth / CGFloat(image.width)
 		
@@ -142,6 +160,4 @@ extension PhotosCollectionController: WaterFallFlowLayoutDelegate {
 	func columnOfWaterFallFlow(in collectionView: UICollectionView) -> Int {
 		return 2
 	}
-	
-	
 }

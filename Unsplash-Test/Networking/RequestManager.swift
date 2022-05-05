@@ -13,6 +13,10 @@ final class RequestManager {
 	
 	private init() { }
 	
+	/// Getting a URLRequest with the passed parameters and authorization data.
+	/// - Parameters:
+	/// - url: URL of the request.
+	/// - httpMethod: HTTP request method.
 	func getRequest(url: URL, httpMethod: HTTPMethod) -> URLRequest {
 		var request = URLRequest(url: url)
 		request.httpMethod = httpMethod.rawValue
@@ -21,6 +25,7 @@ final class RequestManager {
 	}
 }
 
+/// http methods
 enum HTTPMethod: String{
 	case get = "GET"
 	case post = "POST"

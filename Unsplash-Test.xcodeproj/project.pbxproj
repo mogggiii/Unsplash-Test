@@ -13,7 +13,7 @@
 		CE16E8EF2820347100599291 /* DateFormatter + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */; };
 		CE7FC2A6281FD1DA00B7C431 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2A5281FD1DA00B7C431 /* RequestManager.swift */; };
 		CE7FC2A8281FD2DB00B7C431 /* DataTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2A7281FD2DB00B7C431 /* DataTaskManager.swift */; };
-		CE7FC2AC281FD73B00B7C431 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2AB281FD73B00B7C431 /* User.swift */; };
+		CE7FC2AC281FD73B00B7C431 /* SearchPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2AB281FD73B00B7C431 /* SearchPhotoModel.swift */; };
 		CE7FC2B1281FF45700B7C431 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CE7FC2B0281FF45700B7C431 /* SDWebImage */; };
 		CE96BB10281BAD1E00BC3F5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96BB0F281BAD1E00BC3F5E /* AppDelegate.swift */; };
 		CE96BB12281BAD1E00BC3F5E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96BB11281BAD1E00BC3F5E /* SceneDelegate.swift */; };
@@ -30,6 +30,7 @@
 		CEE8B896281E851600F62AC8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8B895281E851600F62AC8 /* NetworkManager.swift */; };
 		CEE8B899281E98ED00F62AC8 /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8B898281E98ED00F62AC8 /* APIConstant.swift */; };
 		CEE8B89B281E990100F62AC8 /* APIUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8B89A281E990100F62AC8 /* APIUrls.swift */; };
+		CEF6446328212D590017D69D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF6446228212D590017D69D /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +40,7 @@
 		CE16E8EE2820347100599291 /* DateFormatter + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + Extensions.swift"; sourceTree = "<group>"; };
 		CE7FC2A5281FD1DA00B7C431 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		CE7FC2A7281FD2DB00B7C431 /* DataTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskManager.swift; sourceTree = "<group>"; };
-		CE7FC2AB281FD73B00B7C431 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CE7FC2AB281FD73B00B7C431 /* SearchPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoModel.swift; sourceTree = "<group>"; };
 		CE96BB0C281BAD1E00BC3F5E /* Unsplash-Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE96BB0F281BAD1E00BC3F5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE96BB11281BAD1E00BC3F5E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		CEE8B895281E851600F62AC8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CEE8B898281E98ED00F62AC8 /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
 		CEE8B89A281E990100F62AC8 /* APIUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrls.swift; sourceTree = "<group>"; };
+		CEF6446228212D590017D69D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		CE96BB0E281BAD1E00BC3F5E /* Unsplash-Test */ = {
 			isa = PBXGroup;
 			children = (
+				CEB8B0DC2823A9C400E564CF /* Alert */,
 				CE8F60462821040500198E78 /* Extensions */,
 				CE7FC2A4281FD1C400B7C431 /* Networking */,
 				CEE8B897281E98D800F62AC8 /* API */,
@@ -164,10 +167,18 @@
 		CE9D8CC6281D1FCF00EF52BB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CE7FC2AB281FD73B00B7C431 /* User.swift */,
+				CE7FC2AB281FD73B00B7C431 /* SearchPhotoModel.swift */,
 				CE16E8EC282031B100599291 /* FavoritePhotos.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CEB8B0DC2823A9C400E564CF /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				CEF6446228212D590017D69D /* AlertView.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		CEE8B897281E98D800F62AC8 /* API */ = {
@@ -259,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE96BB2A281BB88F00BC3F5E /* PhotosCollectionController.swift in Sources */,
+				CEF6446328212D590017D69D /* AlertView.swift in Sources */,
 				CE96BB10281BAD1E00BC3F5E /* AppDelegate.swift in Sources */,
 				CE96BB28281BB24200BC3F5E /* LikedPhotoController.swift in Sources */,
 				CE0D9DE7281C042400BE39C5 /* DetailView.swift in Sources */,
@@ -266,7 +278,7 @@
 				CE96BB31281BC29D00BC3F5E /* PhotosCell.swift in Sources */,
 				CE16E8EF2820347100599291 /* DateFormatter + Extensions.swift in Sources */,
 				CEE8B896281E851600F62AC8 /* NetworkManager.swift in Sources */,
-				CE7FC2AC281FD73B00B7C431 /* User.swift in Sources */,
+				CE7FC2AC281FD73B00B7C431 /* SearchPhotoModel.swift in Sources */,
 				CE96BB24281BAD8300BC3F5E /* MainTabBarController.swift in Sources */,
 				CE96BB2D281BBAB600BC3F5E /* WaterfallLayout.swift in Sources */,
 				CEE8B899281E98ED00F62AC8 /* APIConstant.swift in Sources */,

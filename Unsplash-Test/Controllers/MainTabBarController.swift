@@ -8,21 +8,22 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        viewControllers = [
-					createViewController(viewController: PhotosCollectionController(),
-															 title: "Photo",
-															 image: "photo.circle"),
-					
-					createViewController(viewController: LikedPhotoController(),
-															 title: "Liked",
-															 image: "heart.fill"),
-				]
-    }
-    
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		viewControllers = [
+			createViewController(viewController: PhotosCollectionController(),
+													 title: "Photo",
+													 image: "photo.circle"),
+			
+			createViewController(viewController: LikedPhotoController(),
+													 title: "Liked",
+													 image: "heart.fill"),
+		]
+	}
+	
+	/// Generate navigation view controller
 	fileprivate func createViewController(viewController: UIViewController, title: String, image: String) -> UIViewController {
 		let navVC = UINavigationController(rootViewController: viewController)
 		navVC.navigationBar.prefersLargeTitles = true

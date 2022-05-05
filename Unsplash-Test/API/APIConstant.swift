@@ -8,6 +8,7 @@
 import Foundation
 
 enum APIConstant {
+	/// Unsplash base URL and personal access key
 	static let baseURL = "https://api.unsplash.com"
 	static let accessKey = "C51uVC9DKKIQYvgVVjbenH5e0DOyfX9WxLPLZ6_N6tw"
 }

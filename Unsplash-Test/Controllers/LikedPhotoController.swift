@@ -8,17 +8,30 @@
 import UIKit
 import RealmSwift
 
-class LikedPhotoController: UITableViewController {
+class LikedPhotoController: UIViewController {
 	
 	let realm = try! Realm()
 	var photos: Results<FavoritePhotos>!
 	
 	private let cellId = "cellId"
+	private let alert = AlertView()
 	
+	// MARK: - UI Components
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView(frame: view.bounds)
+		tableView.dataSource = self
+		tableView.delegate = self
+		tableView.register(LikedPhotosCell.self, forCellReuseIdentifier: cellId)
+		return tableView
+	}()
+	
+	// MARK: - VC life cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		tableView.register(LikedPhotosCell.self, forCellReuseIdentifier: cellId)
+		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .done, target: self, action: #selector(handleDelete))
+		
+		view.addSubview(tableView)
 		loadPhotos()
 	}
 	
@@ -27,6 +40,7 @@ class LikedPhotoController: UITableViewController {
 		loadPhotos()
 	}
 	
+	/// Upload photos from Realm
 	fileprivate func loadPhotos() {
 		photos = realm.objects(FavoritePhotos.self)
 		DispatchQueue.main.async {
@@ -34,46 +48,90 @@ class LikedPhotoController: UITableViewController {
 		}
 	}
 	
+	// MARK: - Alerts
+	fileprivate func showDeletedAlert() {
+		addAlert()
+		alert.isSaved = false
+		alert.animate(view: self.view)
+	}
 	
-	// MARK: - Table view data source
+	fileprivate func addAlert() {
+		alert.frame = CGRect(x: 0, y: 0, width: view.frame.width / 2, height: view.frame.width / 2)
+		alert.center = view.center
+		alert.alpha = 0
+		view.addSubview(alert)
+		view.bringSubviewToFront(alert)
+	}
 	
-	override func numberOfSections(in tableView: UITableView) -> Int {
+	fileprivate func showErrorAlert() {
+		let alert = UIAlertController(title: "Ooops", message: "Something went wrong", preferredStyle: .alert)
+		let action = UIAlertAction(title: "OK", style: .destructive)
+		
+		alert.addAction(action)
+		present(alert, animated: true)
+	}
+	
+	// MARK: - Objc fileprivate func
+	@objc fileprivate func handleDelete() {
+		/// delete all objects Realm
+		do {
+			try realm.write({
+				realm.deleteAll()
+				DispatchQueue.main.async {
+					self.tableView.reloadData()
+				}
+			})
+		} catch {
+			DispatchQueue.main.async {
+				self.showErrorAlert()
+			}
+		}
+	}
+}
+// MARK: - Table view data source, Table view delegate
+extension LikedPhotoController: UITableViewDataSource, UITableViewDelegate {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return photos.count
 	}
 	
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? LikedPhotosCell else {
 			return UITableViewCell()
 		}
+		
 		let photo = photos[indexPath.row]
 		cell.favPhoto = photo
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let favPhoto = photos[indexPath.row]
 		let vc = DetailController()
 		vc.favPhoto = favPhoto
 		navigationController?.pushViewController(vc, animated: true)
 	}
-
-	override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+	
+	func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
 		return .delete
 	}
 	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			let photo = photos[indexPath.row]
+			
+			/// delete single object Realm
 			do {
 				try realm.write({
 					realm.delete(photo)
+					self.showDeletedAlert()
 				})
 			} catch {
 				print(error.localizedDescription)
+				self.showDeletedAlert()
 			}
 		}
 		
@@ -81,5 +139,5 @@ class LikedPhotoController: UITableViewController {
 			self.tableView.reloadData()
 		}
 	}
-	
+
 }

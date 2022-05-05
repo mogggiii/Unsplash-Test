@@ -10,13 +10,14 @@ import SDWebImage
 
 class PhotosCell: UICollectionViewCell {
 	
-	var photo: PhotoData? {
+	var photo: Photo? {
 		didSet {
 			guard let photo = photo else { return }
 			imageView.sd_setImage(with: URL(string:photo.urls.small))
 		}
 	}
 	
+	// MARK: - UI Components
 	fileprivate let imageView: UIImageView =  {
 		let iv = UIImageView()
 		iv.contentMode = .scaleAspectFill
@@ -34,6 +35,7 @@ class PhotosCell: UICollectionViewCell {
 		return view
 	}()
 	
+	// MARK: - Init
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		
@@ -49,6 +51,7 @@ class PhotosCell: UICollectionViewCell {
 		imageView.image = nil
 	}
 	
+	// MARK: - Fileprivate methods
 	fileprivate func setupImageView() {
 		conteinerView.addSubview(imageView)
 		conteinerView.layer.cornerRadius = 10

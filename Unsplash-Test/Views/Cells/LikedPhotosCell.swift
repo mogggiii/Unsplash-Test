@@ -16,9 +16,10 @@ class LikedPhotosCell: UITableViewCell {
 		}
 	}
 	
-	let photoSize: CGFloat = 55
-
-	let photo: UIImageView = {
+	fileprivate let photoSize: CGFloat = 55
+	
+	// MARK: - UI Components
+	fileprivate let photo: UIImageView = {
 		let iv = UIImageView()
 		iv.contentMode = .scaleAspectFill
 		iv.clipsToBounds = true
@@ -28,7 +29,7 @@ class LikedPhotosCell: UITableViewCell {
 		return iv
 	}()
 	
-	let authorNameLabel: UILabel = {
+	fileprivate let authorNameLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Vladimir Ptitsa"
 		label.font = .systemFont(ofSize: 18)
@@ -36,6 +37,7 @@ class LikedPhotosCell: UITableViewCell {
 		return label
 	}()
 	
+	// MARK: - Init
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
@@ -46,8 +48,8 @@ class LikedPhotosCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	// MARK: - Fileprivate methods
 	fileprivate func setupCell() {
-		
 		contentView.addSubview(photo)
 		contentView.addSubview(authorNameLabel)
 		

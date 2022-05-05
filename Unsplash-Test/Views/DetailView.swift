@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// MARK: - DetailViewControllerDelegate
 protocol DetailViewControllerDelegate: AnyObject {
 	func savePhoto(photo: FavoritePhotos)
 	func deletePhoto(photo: FavoritePhotos)
@@ -15,12 +16,13 @@ protocol DetailViewControllerDelegate: AnyObject {
 
 class DetailView: UIView {
 	
-	var photo: PhotoData? {
+	var photo: Photo? {
 		didSet {
 			guard let photo = photo else { return }
 			let df = DateFormatter()
 			imageView.sd_setImage(with: URL(string: photo.urls.regular))
 			authorAndDateLabel.text = "By: \(photo.user.username)\nDate: \(df.format().string(from: photo.createdAt))"
+			placeAndLikesCountLabel.text = "\(photo.user.location ?? "No Location")\n\(photo.likes) likes"
 		}
 	}
 	
@@ -28,15 +30,18 @@ class DetailView: UIView {
 		didSet {
 			guard let favPhoto = favPhoto else { return }
 			imageView.sd_setImage(with: URL(string: favPhoto.photoUrl))
+			authorAndDateLabel.text = "By: \(favPhoto.userName)\nDate: \(favPhoto.createdAT)"
+			placeAndLikesCountLabel.text = "\(favPhoto.location ?? "No Location")\n\(favPhoto.likesCount) downloads"
 			addToFavoriteButton.isHidden = true
 		}
 	}
 	
+	/// delegate
 	weak var delegate: DetailViewControllerDelegate?
 	
+	// MARK: - UIComponents
 	private let imageView: UIImageView = {
 		let iv = UIImageView()
-		iv.backgroundColor = .black
 		iv.contentMode = .scaleAspectFit
 		return iv
 	}()
@@ -52,21 +57,20 @@ class DetailView: UIView {
 	
 	private let authorAndDateLabel: UILabel = {
 		let label = UILabel()
-		label.text = "By: Tinkoff\nDate: 24.09.1999"
 		label.font = .systemFont(ofSize: 16)
 		label.numberOfLines = 3
 		return label
 	}()
 	
-	private let placeAndDownloadCountLabel: UILabel = {
+	private let placeAndLikesCountLabel: UILabel = {
 		let label = UILabel()
-		label.text = "London\n29999 downloads"
 		label.font = .systemFont(ofSize: 16)
 		label.numberOfLines = 2
 		label.textAlignment = .right
 		return label
 	}()
 	
+	// MARK: - Init
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		backgroundColor = .systemBackground
@@ -77,17 +81,18 @@ class DetailView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	// MARK: - Fileprivate methods
 	fileprivate func setupLayout() {
-		let stackView = UIStackView(arrangedSubviews: [authorAndDateLabel, placeAndDownloadCountLabel])
+		let screenSize = UIScreen.main.bounds
+		let buttonSize: CGFloat = 50
+		
+		let stackView = UIStackView(arrangedSubviews: [authorAndDateLabel, placeAndLikesCountLabel])
 		stackView.distribution = .fill
 		stackView.axis = .horizontal
 		
 		addSubview(imageView)
 		addSubview(addToFavoriteButton)
 		addSubview(stackView)
-		
-		let screenSize = UIScreen.main.bounds
-		let buttonSize: CGFloat = 50
 		
 		imageView.layer.cornerRadius = 20
 		imageView.frame = CGRect(x: 16, y: 100, width: screenSize.size.width - 32, height: 300)
@@ -98,7 +103,8 @@ class DetailView: UIView {
 		stackView.frame = CGRect(x: 16, y: addToFavoriteButton.frame.maxY + 20, width: screenSize.size.width - 32, height: 90)
 	}
 	
-	@objc func handleLike() {
+	// MARK: - Objc fileprivate methods
+	@objc fileprivate func handleLike() {
 		let config = UIImage.SymbolConfiguration.init(pointSize: 30, weight: .semibold)
 		photo?.isFavoritePhoto.toggle()
 		print("Pressed")

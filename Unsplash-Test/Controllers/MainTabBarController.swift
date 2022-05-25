@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController {
 		super.viewDidLoad()
 		
 		viewControllers = [
-			createViewController(viewController: PhotosCollectionController(),
+			createViewController(viewController: PhotoCollectionViewController(),
 													 title: "Photo",
 													 image: "photo.circle"),
 			

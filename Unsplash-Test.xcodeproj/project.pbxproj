@@ -17,6 +17,13 @@
 		CE50B196283EA27E00F21DD5 /* PhotoCollectionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B18F283EA27E00F21DD5 /* PhotoCollectionModels.swift */; };
 		CE50B197283EA27E00F21DD5 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B190283EA27E00F21DD5 /* PhotoCollectionViewController.swift */; };
 		CE50B198283EA27E00F21DD5 /* PhotoCollectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B191283EA27E00F21DD5 /* PhotoCollectionInteractor.swift */; };
+		CE50B1A3283F4F3C00F21DD5 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B19C283F4F3C00F21DD5 /* DetailPresenter.swift */; };
+		CE50B1A4283F4F3C00F21DD5 /* DetailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B19D283F4F3C00F21DD5 /* DetailWorker.swift */; };
+		CE50B1A5283F4F3C00F21DD5 /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B19E283F4F3C00F21DD5 /* DetailRouter.swift */; };
+		CE50B1A6283F4F3C00F21DD5 /* DetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B19F283F4F3C00F21DD5 /* DetailModels.swift */; };
+		CE50B1A7283F4F3C00F21DD5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B1A0283F4F3C00F21DD5 /* DetailViewController.swift */; };
+		CE50B1A8283F4F3C00F21DD5 /* DetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50B1A1283F4F3C00F21DD5 /* DetailInteractor.swift */; };
+		CE50B1A9283F4F3C00F21DD5 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE50B1A2283F4F3C00F21DD5 /* DetailViewController.xib */; };
 		CE7FC2AC281FD73B00B7C431 /* SearchPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FC2AB281FD73B00B7C431 /* SearchPhotoModel.swift */; };
 		CE7FC2B1281FF45700B7C431 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CE7FC2B0281FF45700B7C431 /* SDWebImage */; };
 		CE96BB10281BAD1E00BC3F5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96BB0F281BAD1E00BC3F5E /* AppDelegate.swift */; };
@@ -52,6 +59,13 @@
 		CE50B18F283EA27E00F21DD5 /* PhotoCollectionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionModels.swift; sourceTree = "<group>"; };
 		CE50B190283EA27E00F21DD5 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		CE50B191283EA27E00F21DD5 /* PhotoCollectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionInteractor.swift; sourceTree = "<group>"; };
+		CE50B19C283F4F3C00F21DD5 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		CE50B19D283F4F3C00F21DD5 /* DetailWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWorker.swift; sourceTree = "<group>"; };
+		CE50B19E283F4F3C00F21DD5 /* DetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRouter.swift; sourceTree = "<group>"; };
+		CE50B19F283F4F3C00F21DD5 /* DetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModels.swift; sourceTree = "<group>"; };
+		CE50B1A0283F4F3C00F21DD5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		CE50B1A1283F4F3C00F21DD5 /* DetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInteractor.swift; sourceTree = "<group>"; };
+		CE50B1A2283F4F3C00F21DD5 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		CE7FC2AB281FD73B00B7C431 /* SearchPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoModel.swift; sourceTree = "<group>"; };
 		CE96BB0C281BAD1E00BC3F5E /* Unsplash-Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE96BB0F281BAD1E00BC3F5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +106,7 @@
 		CE50B18B283EA24B00F21DD5 /* PhotoCollection */ = {
 			isa = PBXGroup;
 			children = (
+				CE50B19A283F4EE200F21DD5 /* Cell */,
 				CE50B18C283EA27E00F21DD5 /* PhotoCollectionPresenter.swift */,
 				CE50B18D283EA27E00F21DD5 /* PhotoCollectionWorker.swift */,
 				CE50B18E283EA27E00F21DD5 /* PhotoCollectionRouter.swift */,
@@ -100,6 +115,28 @@
 				CE50B191283EA27E00F21DD5 /* PhotoCollectionInteractor.swift */,
 			);
 			path = PhotoCollection;
+			sourceTree = "<group>";
+		};
+		CE50B19A283F4EE200F21DD5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CE96BB30281BC29D00BC3F5E /* PhotosCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CE50B19B283F4F1500F21DD5 /* DetailController */ = {
+			isa = PBXGroup;
+			children = (
+				CE50B19C283F4F3C00F21DD5 /* DetailPresenter.swift */,
+				CE50B19D283F4F3C00F21DD5 /* DetailWorker.swift */,
+				CE50B19E283F4F3C00F21DD5 /* DetailRouter.swift */,
+				CE50B19F283F4F3C00F21DD5 /* DetailModels.swift */,
+				CE50B1A0283F4F3C00F21DD5 /* DetailViewController.swift */,
+				CE50B1A1283F4F3C00F21DD5 /* DetailInteractor.swift */,
+				CE50B1A2283F4F3C00F21DD5 /* DetailViewController.xib */,
+			);
+			path = DetailController;
 			sourceTree = "<group>";
 		};
 		CE8F60462821040500198E78 /* Extensions */ = {
@@ -130,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				CE50B18B283EA24B00F21DD5 /* PhotoCollection */,
+				CE50B19B283F4F1500F21DD5 /* DetailController */,
 				CEB8B0DD2823B02E00E564CF /* Readme */,
 				CEB8B0DC2823A9C400E564CF /* Alert */,
 				CE8F60462821040500198E78 /* Extensions */,
@@ -178,7 +216,6 @@
 		CE96BB2E281BC26F00BC3F5E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				CE96BB30281BC29D00BC3F5E /* PhotosCell.swift */,
 				CE96BB32281BCCD400BC3F5E /* LikedPhotosCell.swift */,
 			);
 			path = Cells;
@@ -292,6 +329,7 @@
 				CEB8B0E62823B04100E564CF /* 1.gif in Resources */,
 				CEB8B0E32823B04100E564CF /* 4.gif in Resources */,
 				CEB8B0E72823B04100E564CF /* 5.gif in Resources */,
+				CE50B1A9283F4F3C00F21DD5 /* DetailViewController.xib in Resources */,
 				CE96BB1C281BAD2400BC3F5E /* LaunchScreen.storyboard in Resources */,
 				CE96BB19281BAD2400BC3F5E /* Assets.xcassets in Resources */,
 				CEB8B0E42823B04100E564CF /* 2.gif in Resources */,
@@ -306,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE50B1A5283F4F3C00F21DD5 /* DetailRouter.swift in Sources */,
 				CE96BB2A281BB88F00BC3F5E /* PhotosCollectionController.swift in Sources */,
 				CEF6446328212D590017D69D /* AlertView.swift in Sources */,
 				CE96BB10281BAD1E00BC3F5E /* AppDelegate.swift in Sources */,
@@ -314,14 +353,19 @@
 				CE0D9DE7281C042400BE39C5 /* DetailView.swift in Sources */,
 				CE16E8ED282031B100599291 /* FavoritePhotos.swift in Sources */,
 				CE96BB31281BC29D00BC3F5E /* PhotosCell.swift in Sources */,
+				CE50B1A7283F4F3C00F21DD5 /* DetailViewController.swift in Sources */,
 				CE16E8EF2820347100599291 /* DateFormatter + Extensions.swift in Sources */,
+				CE50B1A8283F4F3C00F21DD5 /* DetailInteractor.swift in Sources */,
+				CE50B1A6283F4F3C00F21DD5 /* DetailModels.swift in Sources */,
 				CE50B195283EA27E00F21DD5 /* PhotoCollectionRouter.swift in Sources */,
+				CE50B1A4283F4F3C00F21DD5 /* DetailWorker.swift in Sources */,
 				CE7FC2AC281FD73B00B7C431 /* SearchPhotoModel.swift in Sources */,
 				CE96BB24281BAD8300BC3F5E /* MainTabBarController.swift in Sources */,
 				CE96BB2D281BBAB600BC3F5E /* WaterfallLayout.swift in Sources */,
 				CE50B194283EA27E00F21DD5 /* PhotoCollectionWorker.swift in Sources */,
 				CEE8B899281E98ED00F62AC8 /* APIConstant.swift in Sources */,
 				CE96BB33281BCCD400BC3F5E /* LikedPhotosCell.swift in Sources */,
+				CE50B1A3283F4F3C00F21DD5 /* DetailPresenter.swift in Sources */,
 				CE50B198283EA27E00F21DD5 /* PhotoCollectionInteractor.swift in Sources */,
 				CEE8B89B281E990100F62AC8 /* APIUrls.swift in Sources */,
 				CE50B197283EA27E00F21DD5 /* PhotoCollectionViewController.swift in Sources */,

@@ -19,14 +19,31 @@ enum PhotoCollection {
 		}
 		struct Response {
 			enum ResponseType {
+				case presentRandomImages(searchResponse: [Photo])
+				case presentSearchImages(searchResponse: SearchPhotoModel?)
 				case presentErrorAlert
 			}
 		}
 		struct ViewModel {
 			enum ViewModelData {
+				case displayRandomImages(viewModel: ImagesViewModel)
+				case displaySearchImages(viewModel: ImagesViewModel)
 				case displayErrorAlert
 			}
 		}
 	}
 	
+}
+
+struct ImagesViewModel {
+	struct Cell {
+		var createdDate: Date
+		var likes: Int
+		var width, height: Int
+		var url: String
+		var username: String
+		var location: String?
+	}
+	
+	let cells: [Cell]
 }

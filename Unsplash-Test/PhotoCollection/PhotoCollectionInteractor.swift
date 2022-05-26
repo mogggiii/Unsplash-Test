@@ -26,9 +26,9 @@ class PhotoCollectionInteractor: PhotoCollectionBusinessLogic {
 		case .fetchRandomImages:
 			self.service?.fetchRandomPhotos(count: 50, completion: { [weak self] result in
 				switch result {
-				case .success(let result):
-					print("RESULT RESULT RESULT RESULT RESULT RESULT RESULT RESULT RESULT RESULT\n---------------------------")
-					print(result.count)
+				case .success(let searchResponse):
+					print("COUNT", searchResponse.count)
+					self?.presenter?.presentData(response: .presentRandomImages(searchResponse: searchResponse))
 				case .failure(let error):
 					print("Error to fetch random images", error)
 					self?.presenter?.presentData(response: .presentErrorAlert)
@@ -37,8 +37,8 @@ class PhotoCollectionInteractor: PhotoCollectionBusinessLogic {
 		case .fetchSearchImages(let searchTerm):
 			self.service?.searchPhotos(count: 50, searchTerm: searchTerm, completion: { [weak self] result in
 				switch result {
-				case .success(let result):
-					print(result?.results.count)
+				case .success(let response):
+					self?.presenter?.presentData(response: .presentSearchImages(searchResponse: response))
 				case .failure(let error):
 					print("Error to fetch search images", error)
 					self?.presenter?.presentData(response: .presentErrorAlert)

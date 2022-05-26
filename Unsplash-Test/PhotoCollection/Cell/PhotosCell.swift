@@ -10,10 +10,10 @@ import SDWebImage
 
 class PhotosCell: UICollectionViewCell {
 	
-	var photo: Photo? {
+	var image: ImagesViewModel.Cell? {
 		didSet {
-			guard let photo = photo else { return }
-			imageView.sd_setImage(with: URL(string:photo.urls.small))
+			guard let image = image, let url = URL(string: image.url) else { return }
+			imageView.sd_setImage(with: url)
 		}
 	}
 	

@@ -3,7 +3,6 @@
 //  Unsplash-Test
 //
 //  Created by mogggiii on 26.05.2022.
-//  Copyright (c) 2022 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
@@ -17,7 +16,7 @@ class PhotoCollectionViewController: UICollectionViewController, PhotoCollection
 	private let cellId = "cell"
 	private let margin: CGFloat = 10.0
 	private let searchConroller = UISearchController(searchResultsController: nil)
-	private var images = [Photo]()
+	private var viewModel = ImagesViewModel.init(cells: [])
 	
 	var interactor: PhotoCollectionBusinessLogic?
 	var router: (NSObjectProtocol & PhotoCollectionRoutingLogic)?
@@ -67,12 +66,25 @@ class PhotoCollectionViewController: UICollectionViewController, PhotoCollection
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		searchBarConfigure()
 		setupCollectionView()
 		fetchRandomImages()
 	}
 	
 	func displayData(viewModel: PhotoCollection.Model.ViewModel.ViewModelData) {
-		
+		switch viewModel {
+		// Dispaly Random Images
+		case .displayRandomImages(let viewModel):
+			self.viewModel = viewModel
+			self.collectionView.reloadData()
+		// Display Search Images
+		case .displaySearchImages(let viewModel):
+			self.viewModel = viewModel
+			self.collectionView.reloadData()
+		// Display Error Alert
+		case .displayErrorAlert:
+			self.showErrotAlert()
+		}
 	}
 	
 	/// Setup CollectionView
@@ -88,9 +100,27 @@ class PhotoCollectionViewController: UICollectionViewController, PhotoCollection
 	fileprivate func fetchRandomImages() {
 		interactor?.makeRequest(request: .fetchRandomImages)
 	}
+	
+	fileprivate func showErrotAlert() {
+		let alert = UIAlertController(title: "Ooops", message: "Something went wrong", preferredStyle: .alert)
+		let action = UIAlertAction(title: "OK", style: .destructive)
+		
+		alert.addAction(action)
+		present(alert, animated: true)
+	}
+	
+	fileprivate func searchBarConfigure() {
+		searchConroller.searchBar.placeholder = "Search photo"
+		searchConroller.obscuresBackgroundDuringPresentation = false
+		searchConroller.searchBar.delegate = self
+		navigationItem.hidesSearchBarWhenScrolling = false
+		self.navigationItem.searchController = searchConroller
+	}
+	
 	// MARK: - CollectionView Data Source
+	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 10
+		return viewModel.cells.count
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,26 +128,37 @@ class PhotoCollectionViewController: UICollectionViewController, PhotoCollection
 			return UICollectionViewCell()
 		}
 		
-//		let photo = images[indexPath.item]
-//		cell.photo = photo
+		let image = viewModel.cells[indexPath.item]
+		cell.image = image
 		return cell
+	}
+	
+}
+
+// MARK: - Search Bar Delegate
+
+extension PhotoCollectionViewController: UISearchBarDelegate {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let text = searchBar.text, !text.isEmpty else { return }
+		searchBar.resignFirstResponder()
+		
+		interactor?.makeRequest(request: .fetchSearchImages(seatchTerm: text))
 	}
 }
 
+// MARK: - WaterFallFlowLayoutDelegate
+
 extension PhotoCollectionViewController: WaterFallFlowLayoutDelegate {
 	func waterFallFlowLayout(_ waterFallFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-//		let image = images[indexPath.item]
-//		let imageWidth = waterFallFlowLayout.itemWidth
-//		let imageHeight = CGFloat(image.height) * imageWidth / CGFloat(image.width)
-//
-//		return imageHeight
+		let image = viewModel.cells[indexPath.item]
+		let imageWidth = waterFallFlowLayout.itemWidth
+		let imageHeight = CGFloat(image.height) * imageWidth / CGFloat(image.width)
 		
-		return 250
+		return imageHeight
 	}
 	
 	func columnOfWaterFallFlow(in collectionView: UICollectionView) -> Int {
 		return 2
 	}
-	
 	
 }
